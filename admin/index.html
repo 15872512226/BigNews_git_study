@@ -20,7 +20,7 @@
         <a href="#" class="logo"><img src="images/logo02.png" alt="logo"></a>
         <div class="user_info">
             <img src="images/2.jpg" alt="person">
-            <span>欢迎&nbsp;&nbsp;李思思</span>
+            <span>欢迎&nbsp;&nbsp; <i class="user_name" style="font-style: normal;">李思思</i> </span>
             <b>管理员</b>
         </div>
         <!-- 左侧导航栏 -->
@@ -54,5 +54,54 @@
 
         </div>
     </div>
+
+
+    <script src="./libs/http.js"></script>
+    <script>
+        // 入口函数
+        $(function() {
+            // 每次发送ajax请求操作的都要使用 Token 认证
+            // 设置一个ajax默认请求 ajaxSetup() 方法   做一个每次发送ajax都验证一下token
+            // $.ajaxSetup({
+            //     beforeSend: function(xhr) {
+            //         xhr.setRequestHeader("Authorization", localStorage.getItem('token'));
+            //     },
+            //     // 请求错误时 进行拦截  并返回登录页面
+            //     error: function(xhr, status, error) {
+            //         if (error == 'Forbidden') { //用户未登录
+            //             alert('请先登录！');
+            //             window.location.href = "./login.html";
+            //         }
+            //     }
+            // })
+
+
+            // 一 ：进入页面获取管理员信息并显示
+            function big_admin() {
+                $.ajax({
+                    type: 'get',
+                    url: BigNew.user_info,
+                    success: function(backData) {
+                        console.log(backData);
+                        if (backData.code == 200) {
+                            // 显示当前管理员 名字与图标
+                            $('.user_info img').attr('src', backData.data.userPic);
+                            $('.user_info i').text(backData.data.nickname);
+                            $('.user_center_link img').attr('src', backData.data.userPic);
+                        }
+                    }
+                });
+            };
+            // 获取管理员信息并显示
+            big_admin();
+
+            // 
+
+
+
+        })
+    </script>
+
 </body>
+
 </html>
